@@ -29,7 +29,7 @@ export default function Login() {
 
         {/* Heading */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-white">
+          <h1 className="text-5xl font-bold text-white">
             Welcome Back
           </h1>
 
@@ -41,7 +41,16 @@ export default function Login() {
         {/* Login Card */}
         <div className="bg-white rounded-2xl shadow-2xl p-8">
 
-          <form onSubmit={handleLogin} className="space-y-5">
+        <form onSubmit={handleLogin} className="space-y-5">
+             {/* Name */}
+         <label className="block text-sm font-medium text-slate-700 mb-2">
+           Name
+        </label>
+        
+        <input
+           type="text"
+           placeholder="Enter your name"
+           className="w-full px-4 py-3 rounded-lg border border-slate-300 text-slate-700 " />
 
             {/* Email */}
             <div>

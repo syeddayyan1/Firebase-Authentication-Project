@@ -91,7 +91,7 @@ export default function Signup() {
               type="submit"
               className="w-full bg-blue-600 hover:bg-blue-700
                text-white font-semibold py-3 rounded-lg transition">
-              Create Account
+              Sign up
             </button>
 
           </form>
