@@ -6,7 +6,11 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { GithubAuthProvider} from "firebase/auth";
 
+
+
+  // ------------------ for Email or Password ---------------------
 
 export default function Signup() {
   const router = useRouter();
@@ -37,13 +41,26 @@ export default function Signup() {
   } catch (error) {
     alert(error.message);
   }
+  };
+  
+     // ------------------for Github ---------------------
+ const handleGithubLogin = async () => {
+  try {
+    const provider = new GithubAuthProvider();
+
+    await signInWithPopup(auth, provider);
+
+    router.push("/home");
+  } catch (error) {
+    alert(error.message);
+  }
 };
 
   return (
-    <main className="min-h-screen bg-slate-950 flex items-center justify-center px-4">
-      <div className="w-full max-w-md">
+    <main className="min-h-screen bg-slate-950 flex items-center justify-center px-4 px-10 mb-20">
+      <div className="w-full max-w-lg">
 
-        <div className="text-center mb-8">
+        <div className="text-center mb-8 pt-5">
           <h1 className="text-5xl font-bold text-white">
             Create Account
           </h1>
@@ -67,7 +84,7 @@ export default function Signup() {
                 type="text"
                 required
                 placeholder="Enter your name"
-                className="w-full px-4 py-3 rounded-lg border
+                className="w-full px-4 py-2 rounded-lg border
                  border-slate-300 outline-none focus:ring-2 focus:ring-blue-500 text-slate-700"
               />
             </div>
@@ -83,7 +100,7 @@ export default function Signup() {
                 placeholder="you@example.com"
                 value={email} required
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 rounded-lg border border-slate-300
+                className="w-full px-4 py-2 rounded-lg border border-slate-300
                 outline-none focus:ring-2 focus:ring-blue-500 text-slate-700"
               />
             </div>
@@ -100,7 +117,7 @@ export default function Signup() {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 rounded-lg border border-slate-300 
+                className="w-full px-4 py-2 rounded-lg border border-slate-300 
                  outline-none focus:ring-2 focus:ring-blue-500 text-slate-700"
               />
             </div>
@@ -108,21 +125,53 @@ export default function Signup() {
             <button
               type="submit"
               className="w-full bg-blue-600 hover:bg-blue-700
-               text-white font-semibold py-3 rounded-lg transition">
+               text-white font-semibold py-2 rounded-lg transition">
               Sign up
             </button>
 
-            <p className="w-full text-center text-slate-700">OR</p>
+            <div className="flex items-center gap-4 ">
+           <div className="flex-1 h-px bg-slate-300"></div>
 
-            <button
-              type="button"
-              onClick={handleGoogleLogin}
-              className="w-full ...  text-slate-500  font-bold"
-            >
-             Continue with Google
+           <p className="text-sm font-medium text-slate-400">OR</p>
+
+           <div className="flex-1 h-px bg-slate-300"></div>
+         </div>
+
+    <button
+       type="button"
+       onClick={handleGoogleLogin}
+       className="w-full flex items-center justify-center gap-3
+       py-2 px-4 bg-white border border-slate-300 rounded-lg
+       text-slate-700 font-semibold hover:bg-slate-50
+       transition duration-200 shadow-sm"
+     >
+  <img
+    src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+    alt="Google"
+    className="w-5 h-5"
+  />
+
+     Continue with Google
             </button>
+            
+             <button
+       type="button"
+       onClick={handleGithubLogin}
+       className="w-full flex items-center justify-center gap-3
+       py-2 px-2 bg-white border border-slate-300 rounded-lg
+       text-slate-700 font-semibold hover:bg-slate-50
+       transition duration-200 shadow-sm"
+     >
+      <img
+        src="https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png"
+        alt="GitHub"
+        className="w-5 h-7"
+      />
 
-          </form>
+     Continue with Github
+    </button>
+
+  </form>
 
         <p className="text-center text-sm text-slate-500 mt-6">
          Already have an account?{" "}
