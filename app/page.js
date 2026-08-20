@@ -5,6 +5,9 @@ import { useRouter } from "next/navigation";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+
+
 export default function Signup() {
   const router = useRouter();
 
@@ -22,6 +25,19 @@ export default function Signup() {
       alert(error.message);
     }
   };
+
+   // ------------------for Goggle---------------------
+  const handleGoogleLogin = async () => {
+  try {
+    const provider = new GoogleAuthProvider();
+
+    await signInWithPopup(auth, provider);
+
+    router.push("/home");
+  } catch (error) {
+    alert(error.message);
+  }
+};
 
   return (
     <main className="min-h-screen bg-slate-950 flex items-center justify-center px-4">
@@ -49,6 +65,7 @@ export default function Signup() {
 
               <input
                 type="text"
+                required
                 placeholder="Enter your name"
                 className="w-full px-4 py-3 rounded-lg border
                  border-slate-300 outline-none focus:ring-2 focus:ring-blue-500 text-slate-700"
@@ -64,7 +81,7 @@ export default function Signup() {
               <input
                 type="email"
                 placeholder="you@example.com"
-                value={email}
+                value={email} required
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-4 py-3 rounded-lg border border-slate-300
                 outline-none focus:ring-2 focus:ring-blue-500 text-slate-700"
@@ -80,6 +97,7 @@ export default function Signup() {
               <input
                 type="password"
                 placeholder="••••••••"
+                required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full px-4 py-3 rounded-lg border border-slate-300 
@@ -92,6 +110,16 @@ export default function Signup() {
               className="w-full bg-blue-600 hover:bg-blue-700
                text-white font-semibold py-3 rounded-lg transition">
               Sign up
+            </button>
+
+            <p className="w-full text-center text-slate-700">OR</p>
+
+            <button
+              type="button"
+              onClick={handleGoogleLogin}
+              className="w-full ...  text-slate-500  font-bold"
+            >
+             Continue with Google
             </button>
 
           </form>

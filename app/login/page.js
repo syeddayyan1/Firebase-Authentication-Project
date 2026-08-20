@@ -5,6 +5,11 @@ import { useRouter } from "next/navigation";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
 
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+
+
+  // ------------------ for Email or Password ---------------------
+
 export default function Login() {
   const router = useRouter();
 
@@ -22,6 +27,19 @@ export default function Login() {
       alert("Invalid email or password");
     }
   };
+
+  // ------------------for Goggle---------------------
+  const handleGoogleLogin = async () => {
+  try {
+    const provider = new GoogleAuthProvider();
+
+    await signInWithPopup(auth, provider);
+
+    router.push("/home");
+  } catch (error) {
+    alert(error.message);
+  }
+};
 
   return (
     <main className="min-h-screen bg-slate-950 flex items-center justify-center px-4">
@@ -49,7 +67,8 @@ export default function Login() {
         
         <input
            type="text"
-           placeholder="Enter your name"
+            placeholder="Enter your name"
+            required
            className="w-full px-4 py-3 rounded-lg border border-slate-300 text-slate-700 " />
 
             {/* Email */}
@@ -61,6 +80,7 @@ export default function Login() {
               <input
                 type="email"
                 placeholder="you@example.com"
+                required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                  className="w-full px-4 py-3 rounded-lg border border-slate-300
@@ -76,7 +96,7 @@ export default function Login() {
 
               <input
                 type="password"
-                placeholder="••••••••"
+                placeholder="••••••••" required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full px-4 py-3 rounded-lg border border-slate-300
@@ -91,6 +111,17 @@ export default function Login() {
               font-semibold py-3 rounded-lg transition"
             >
               Login
+            </button>
+
+            
+            <p className="w-full text-center text-slate-700">OR</p>
+
+            <button
+              type="button"
+              onClick={handleGoogleLogin}
+              className="w-full ...  text-slate-500  font-bold"
+            >
+             Continue with Google
             </button>
 
           </form>
